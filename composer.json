@@ -1,0 +1,31 @@
+{
+    "name": "jahondust/model-log",
+    "description": "Voyager Model Log",
+    "type": "library",
+    "require": {
+        "tcg/voyager": "^1.0"
+    },
+    "require-dev": {
+        "laravel/laravel": "^5.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jahondust",
+            "email": "jahondust@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Jahondust\\ModelLog\\": "src/"
+        }
+    },
+    "extra": {
+        "hook": {
+            "providers": [
+                "Jahondust\\ModelLog\\ModelLogsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
