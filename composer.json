@@ -3,10 +3,7 @@
     "description": "Voyager Model Log",
     "type": "library",
     "require": {
-        "tcg/voyager": "^1.0"
-    },
-    "require-dev": {
-        "laravel/laravel": "^5.5"
+        "larapack/hooks": "~1.0"
     },
     "license": "MIT",
     "authors": [
