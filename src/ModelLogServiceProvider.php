@@ -34,6 +34,8 @@ Class ModelLogServiceProvider extends ServiceProvider
 
             $this->loadViewsFrom(__DIR__.'/../resources/views', 'modellog');
 
+            $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'modellog');
+
             $this->loadModels();
 
         } catch(\Exception $e){
