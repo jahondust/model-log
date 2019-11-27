@@ -82,7 +82,7 @@ Class ModelLogServiceProvider extends ServiceProvider
                     'menu_id' => $menu->id,
                     'url' => '',
                     'route' => 'voyager.model_log.index',
-                    'title' => 'Model Logs',
+                    'title' => 'Model Log',
                     'target' => '_self',
                     'icon_class' => 'voyager-logbook',
                     'color' => null,
