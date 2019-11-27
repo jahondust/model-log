@@ -43,23 +43,21 @@ Class ModelLogServiceProvider extends ServiceProvider
 
     public function register()
     {
-        if (request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*')) {
-            // Create Routes
-            app(Dispatcher::class)->listen('voyager.admin.routing', function ($router) {
-                $this->addRoutes($router);
-            });
+        // Create Routes
+        app(Dispatcher::class)->listen('voyager.admin.routing', function ($router) {
+            $this->addRoutes($router);
+        });
 
-            // Create Menu
-            app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
-                $this->addThemeMenuItem($menu);
-            });
+        // Create Menu
+        app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
+            $this->addThemeMenuItem($menu);
+        });
 
-            // Publish config
-            $this->publishes([dirname(__DIR__).'/config/model-log.php' => config_path('model-log.php')], 'model-log-config');
+        // Publish config
+        $this->publishes([dirname(__DIR__).'/config/model-log.php' => config_path('model-log.php')], 'model-log-config');
 
-            // Create Table
-            $this->addLogsTable();
-        }
+        // Create Table
+        $this->addLogsTable();
     }
 
     public function addRoutes($router){
