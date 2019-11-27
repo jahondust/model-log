@@ -20,7 +20,7 @@
     "extra": {
         "hook": {
             "providers": [
-                "Jahondust\\ModelLog\\ModelLogsServiceProvider"
+                "Jahondust\\ModelLog\\ModelLogServiceProvider"
             ]
         }
     },
