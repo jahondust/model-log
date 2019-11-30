@@ -4,6 +4,7 @@ namespace Jahondust\ModelLog\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Jahondust\ModelLog\Models\ModelLog;
 use Illuminate\Support\Facades\File;
 use TCG\Voyager\Facades\Voyager;
@@ -69,13 +70,13 @@ class ModelLogController extends Controller
 
     public function assets(Request $request)
     {
-        $path = str_start(str_replace(['../', './'], '', urldecode($request->path)), '/');
-        $path = base_path('vendor/model-log/resources/assets'.$path);
+        $path = Str::start(str_replace(['../', './'], '', urldecode($request->path)), '/');
+        $path = base_path('vendor/tcg/voyager/publishable/assets'.$path);
         if (File::exists($path)) {
             $mime = '';
-            if (ends_with($path, '.js')) {
+            if (Str::endsWith($path, '.js')) {
                 $mime = 'text/javascript';
-            } elseif (ends_with($path, '.css')) {
+            } elseif (Str::endsWith($path, '.css')) {
                 $mime = 'text/css';
             } else {
                 $mime = File::mimeType($path);
