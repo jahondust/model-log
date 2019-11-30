@@ -33,9 +33,8 @@ Class ModelLogServiceProvider extends ServiceProvider
             $this->registerPolicies();
 
             $this->loadViewsFrom(__DIR__.'/../resources/views', 'modellog');
-
-            $this->loadTranslationsFrom(realpath(__DIR__.'/../resources/lang'), 'modellog');
-
+            $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'modellog');
+            
             $this->loadModels();
 
         } catch(\Exception $e){
@@ -55,6 +54,9 @@ Class ModelLogServiceProvider extends ServiceProvider
             $this->addThemeMenuItem($menu);
         });
 
+        //Load helpers
+        $this->loadHelpers();
+
         // Publish config
         $this->publishes([dirname(__DIR__).'/config/model-log.php' => config_path('model-log.php')], 'model-log-config');
 
@@ -66,6 +68,8 @@ Class ModelLogServiceProvider extends ServiceProvider
         $namespacePrefix = '\\Jahondust\\ModelLog\\Controllers\\';
         $router->get('model_log', ['uses' => $namespacePrefix.'ModelLogController@browse', 'as' => 'model_log.index']);
         $router->delete('model_log_clear', ['uses' => $namespacePrefix.'ModelLogController@clear', 'as' => 'model_log.clear']);
+        $router->get('modal_log_assets', ['uses' => $namespacePrefix.'ModelLogController@assets', 'as' => 'model_log.assets']);
+
     }
 
     /**
@@ -82,7 +86,7 @@ Class ModelLogServiceProvider extends ServiceProvider
                     'menu_id' => $menu->id,
                     'url' => '',
                     'route' => 'voyager.model_log.index',
-                    'title' => 'Model Log',
+                    'title' => 'Model Logs',
                     'target' => '_self',
                     'icon_class' => 'voyager-logbook',
                     'color' => null,
@@ -106,6 +110,15 @@ Class ModelLogServiceProvider extends ServiceProvider
             if(!class_exists($namespacePrefix . $model)){
                 @include(__DIR__.'/Models/' . $model . '.php');
             }
+        }
+    }
+    /**
+     * Load helpers.
+     */
+    protected function loadHelpers()
+    {
+        foreach (glob(__DIR__.'/Helpers/*.php') as $filename) {
+            require_once $filename;
         }
     }
 
@@ -142,6 +155,8 @@ Class ModelLogServiceProvider extends ServiceProvider
                 $table->string('event')->index();
                 $table->text('before')->nullable();
                 $table->text('after')->nullable();
+                $table->string('ip_address')->nullable();
+                $table->text('user_agent')->nullable();
                 $table->bigInteger('user_id')->unsigned()->index();
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->timestamps();

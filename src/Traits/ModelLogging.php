@@ -3,6 +3,7 @@
 
 namespace Jahondust\ModelLog\Traits;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Jahondust\ModelLog\Models\ModelLog;
 
@@ -19,6 +20,17 @@ trait ModelLogging
         return isset($user->id) ? $user->id : 0;
     }
 
+    public function getUserIp()
+    {
+        $request = Request();
+        return $request->ip();
+    }
+    public function getUserAgent()
+    {
+        $request = Request();
+        return $request->server('HTTP_USER_AGENT');
+    }
+
     public static function bootModelLogging()
     {
         self::created(function($model){
@@ -26,6 +38,8 @@ trait ModelLogging
                 'user_id' => $model->getUserId(),
                 'table_name' => $model->getTable(),
                 'row_id' => $model->id,
+                'ip_address' => $model->getUserIp(),
+                'user_agent' => $model->getUserAgent(),
                 'event' => 'created',
             ]);
         });
@@ -45,6 +59,8 @@ trait ModelLogging
                     'user_id' => $model->getUserId(),
                     'table_name' => $model->getTable(),
                     'row_id' => $model->id,
+                    'ip_address' => $model->getUserIp(),
+                    'user_agent' => $model->getUserAgent(),
                     'event' => 'updated',
                     'after' => json_encode($news),
                     'before' => json_encode($old),
@@ -57,6 +73,8 @@ trait ModelLogging
                 'user_id' => $model->getUserId(),
                 'table_name' => $model->getTable(),
                 'row_id' => $model->id,
+                'ip_address' => $model->getUserIp(),
+                'user_agent' => $model->getUserAgent(),
                 'event' => 'deleted',
             ]);
         });

@@ -5,6 +5,7 @@ namespace Jahondust\ModelLog\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Jahondust\ModelLog\Models\ModelLog;
+use Illuminate\Support\Facades\File;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Controller;
 
@@ -26,15 +27,16 @@ class ModelLogController extends Controller
             $query->orderBy($orderBy, isset($sortOrder) ? $sortOrder : 'ASC');
         }
         $logs = $query->paginate(10);
-
         $headers = [
-            'table_name' => 'Table Name',
-            'row_id' => 'Row',
-            'user_id' => 'User',
-            'event' => 'Event',
-            'before' => 'Before',
-            'after' => 'After',
-            'created_at' => 'Created at',
+            'table_name' => __('modellog::modellog.table_name'),
+            'row_id' => __('modellog::modellog.row'),
+            'event' => __('modellog::modellog.event'),
+            'before' => __('modellog::modellog.before'),
+            'after' => __('modellog::modellog.after'),
+            'ip_address' => __('modellog::modellog.user_ip'),
+            'user_agent' => __('modellog::modellog.user_agent'),
+            'user_id' =>__('modellog::modellog.user'),
+            'created_at' => __('modellog::modellog.created_at'),
         ];
 
         return view('modellog::index', compact(
@@ -60,8 +62,32 @@ class ModelLogController extends Controller
         return redirect()
             ->back()
             ->with([
-                'message'    => "Model Log Cleared",
+                'message'    => __('modellog::modellog.log_cleared'),
                 'alert-type' => 'success',
             ]);
+    }
+
+    public function assets(Request $request)
+    {
+        $path = str_start(str_replace(['../', './'], '', urldecode($request->path)), '/');
+        $path = base_path('vendor/model-log/resources/assets'.$path);
+        if (File::exists($path)) {
+            $mime = '';
+            if (ends_with($path, '.js')) {
+                $mime = 'text/javascript';
+            } elseif (ends_with($path, '.css')) {
+                $mime = 'text/css';
+            } else {
+                $mime = File::mimeType($path);
+            }
+            $response = response(File::get($path), 200, ['Content-Type' => $mime]);
+            $response->setSharedMaxAge(31536000);
+            $response->setMaxAge(31536000);
+            $response->setExpires(new \DateTime('+1 year'));
+
+            return $response;
+        }
+
+        return response('', 404);
     }
 }

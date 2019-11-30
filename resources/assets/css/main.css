@@ -1,0 +1,22 @@
+.user_agent {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+@media (max-width: 992px) {
+    .tooltip {
+        width: 100%;
+    }
+}
+
+.user_agent i {
+    margin-right: 15px;
+    padding: 4px;
+}

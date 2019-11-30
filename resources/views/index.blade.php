@@ -1,11 +1,14 @@
 @extends('voyager::master')
-
-@section('page_title', __('Model Logs'))
+@section('css')
+    <link rel="stylesheet" href="{{ modallog_asset('css/main.css') }} ">
+    <link rel="stylesheet" href="{{ modallog_asset('css/font-awesome.css') }} ">
+@endsection
+@section('page_title', __('modellog::modellog.model_logs'))
 
 @section('page_header')
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="voyager-logbook"></i> {{ __('Model Logs') }}
+            <i class="voyager-logbook"></i> {{ __('modellog::modellog.model_logs') }}
         </h1>
         @can('clear', app('Jahondust\ModelLog\Models\ModelLog'))
             @include('modellog::partials.clear')
@@ -31,7 +34,7 @@
                                 </div>
                                 <div class="col-2">
                                     <select id="filter" name="filter">
-                                        <option value="contains" @if($search->filter == "contains"){{ 'selected' }}@endif>contains</option>
+                                        <option value="contains" @if($search->filter == "contains"){{ 'selected' }}@endif>{{ __('modellog::modellog.contains') }}</option>
                                         <option value="equals" @if($search->filter == "equals"){{ 'selected' }}@endif>=</option>
                                     </select>
                                 </div>
@@ -82,13 +85,20 @@
                                                 @if($field == 'table_name')
                                                     <h5 align="center">{{ $log->{$field} }}</h5>
                                                 @elseif($field == 'user_id')
-                                                    <i>{{ $log->user->name }}</i>
+                                                    <i>{{ isset($log->user->log_name) ? $log->user->log_name : $log->user->name }}</i>
                                                 @elseif($field == 'event')
                                                     <div class="primary"><span class="label {{ $log->getType()['class'] }}">{{ $log->getType()['title'] }}</span></div>
                                                 @elseif($field == 'before' || $field == 'after')
                                                     @foreach( (array) json_decode($log->$field) as $key => $value )
                                                         <div class="primary"><span class="label label-default">{{ $key }}:</span> {{ $value }}</div>
                                                     @endforeach
+                                                @elseif($field == 'user_agent')
+                                                    <div class="col-lg-6 user_agent">
+                                                        <i class="{{ $log->getUserAgent()['device']['icon'] }}"   style=" {{ $log->getUserAgent()['device']['text'] == 'Mobile' ? 'font-size:25px': ""  }}" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['device']['text'] }}"></i>
+                                                        <i class="{{ $log->getUserAgent()['platform']['icon'] }}" style="color: #62a8ea;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['platform']['version'] }}"></i>
+                                                        <i class="{{ $log->getUserAgent()['browser']['icon'] }}" style="color: #0275d8;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['browser']['version'] }}"></i>
+
+                                                    </div>
                                                 @else
                                                     {{ $log->{$field} }}
                                                 @endif
@@ -126,6 +136,7 @@
 @section('javascript')
     <script>
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();  
             $('#search-input select').select2({
                 minimumResultsForSearch: Infinity
             });

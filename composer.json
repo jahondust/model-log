@@ -3,15 +3,14 @@
     "description": "Voyager Model Log",
     "type": "library",
     "require": {
-        "larapack/hooks": "~1.0"
+        "larapack/hooks": "~1.0",
+        "jenssegers/agent": "^2.6"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "jahondust",
-            "email": "jahondust@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Jahongir Dustqulov",
+        "email": "jahondust@gmail.com"
+    }],
     "autoload": {
         "psr-4": {
             "Jahondust\\ModelLog\\": "src/"
