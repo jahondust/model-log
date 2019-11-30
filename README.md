@@ -28,4 +28,4 @@
         use ModelLogging;
     }
     
-![Voyager model log](https://i.imgur.com/7bS5mAJ.png)
+![Voyager model log](https://i.imgur.com/8Nr3vIx.png)
