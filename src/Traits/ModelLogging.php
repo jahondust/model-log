@@ -49,7 +49,7 @@ trait ModelLogging
             $olddatas = $model->getOriginal();
             $old = []; $news = [];
             foreach ($olddatas as $key => $value) {
-                if( (in_array('allFields', $model->getLogFields()) || in_array($key, $model->getLogFields())) && $value != $newdatas[$key] ){
+                if( (in_array('allFields', $model->getLogFields()) || in_array($key, $model->getLogFields())) && md5($value) != md5($newdatas[$key]) ){
                     $old[$key] = $value;
                     $news[$key] = $newdatas[$key];
                 }
