@@ -34,7 +34,7 @@ Class ModelLogServiceProvider extends ServiceProvider
 
             $this->loadViewsFrom(__DIR__.'/../resources/views', 'modellog');
             $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'modellog');
-            
+
             $this->loadModels();
 
         } catch(\Exception $e){
@@ -158,7 +158,6 @@ Class ModelLogServiceProvider extends ServiceProvider
                 $table->string('ip_address')->nullable();
                 $table->text('user_agent')->nullable();
                 $table->bigInteger('user_id')->unsigned()->index();
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->timestamps();
             });
         }
