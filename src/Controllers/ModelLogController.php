@@ -26,6 +26,8 @@ class ModelLogController extends Controller
         }
         if(isset($orderBy)) {
             $query->orderBy($orderBy, isset($sortOrder) ? $sortOrder : 'ASC');
+        } else {
+            $query->orderBy('id', 'DESC');
         }
         $logs = $query->paginate(10);
         $headers = [
