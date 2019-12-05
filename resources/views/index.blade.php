@@ -94,10 +94,11 @@
                                                     @endforeach
                                                 @elseif($field == 'user_agent')
                                                     <div class="col-lg-6 user_agent">
-                                                        <i class="{{ $log->getUserAgent()['device']['icon'] }}"   style=" {{ $log->getUserAgent()['device']['text'] == 'Mobile' ? 'font-size:25px': ""  }}" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['device']['text'] }}"></i>
-                                                        <i class="{{ $log->getUserAgent()['platform']['icon'] }}" style="color: #62a8ea;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['platform']['version'] }}"></i>
-                                                        <i class="{{ $log->getUserAgent()['browser']['icon'] }}" style="color: #0275d8;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['browser']['version'] }}"></i>
-
+                                                        @if( !empty($log->user_agent) )
+                                                            <i class="{{ $log->getUserAgent()['device']['icon'] }}"   style=" {{ $log->getUserAgent()['device']['text'] == 'Mobile' ? 'font-size:25px': ""  }}" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['device']['text'] }}"></i>
+                                                            <i class="{{ $log->getUserAgent()['platform']['icon'] }}" style="color: #62a8ea;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['platform']['version'] }}"></i>
+                                                            <i class="{{ $log->getUserAgent()['browser']['icon'] }}" style="color: #0275d8;" data-toggle="tooltip" data-placement="top" title="{{ $log->getUserAgent()['browser']['version'] }}"></i>
+                                                        @endif
                                                     </div>
                                                 @else
                                                     {{ $log->{$field} }}
