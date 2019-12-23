@@ -57,6 +57,7 @@ trait ModelLogging
                 $old = [];
                 $news = [];
                 foreach ($olddatas as $key => $value) {
+                    if ( !isset($newdatas[$key]) ) continue;
                     if ((in_array('allFields', $model->getLogFields()) || in_array($key, $model->getLogFields())) && md5($value) != md5($newdatas[$key])) {
                         $old[$key] = $value;
                         $news[$key] = $newdatas[$key];
