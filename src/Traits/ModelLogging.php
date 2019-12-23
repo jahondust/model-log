@@ -58,9 +58,11 @@ trait ModelLogging
                 $news = [];
                 foreach ($olddatas as $key => $value) {
                     if ( !isset($newdatas[$key]) ) continue;
-                    if ((in_array('allFields', $model->getLogFields()) || in_array($key, $model->getLogFields())) && md5($value) != md5($newdatas[$key])) {
-                        $old[$key] = $value;
-                        $news[$key] = $newdatas[$key];
+                    $oldvalue = (is_array($value) || is_object($value)) ? json_encode($value) : $value;
+                    $newvalue = (is_array($newdatas[$key]) || is_object($newdatas[$key])) ? json_encode($newdatas[$key]) : $newdatas[$key];
+                    if ((in_array('allFields', $model->getLogFields()) || in_array($key, $model->getLogFields())) && md5($oldvalue) != md5($newvalue)) {
+                        $old[$key] = $oldvalue;
+                        $news[$key] = $newvalue;
                     }
                 }
                 if (count($news) > 0) {
