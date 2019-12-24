@@ -6,10 +6,6 @@
     padding: 0 10px;
 }
 
-.table-responsive {
-    overflow-x: visible;
-}
-
 @media (max-width: 992px) {
     .tooltip {
         width: 100%;
