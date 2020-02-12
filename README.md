@@ -15,8 +15,8 @@
 
 #### How to use Model logging
 
-Voyegr Model Log is used to observe any changes in the model via writing it in the "model-log" 
-table in your database.You can use it ,simply adding  "use ModelLogging;" in your model.
+Voyager Model Log is used to observe any changes in the model via writing it in the "model-log" 
+table in your database.You can use it, simply adding  "use ModelLogging;" in your model.
 
 **Example:**
     
@@ -43,13 +43,13 @@ just remove or add the field from model's  "$logFields" property
 		
 	
 	
-If you want to differently display  "user" field in the "model-log" table add "log_name"  property to your Users model.
+If you want to differently display  "user" field in the "model-log" table, add "getLogNameAttribute"  property to your User model.
 	
 **Example:**
 
     public function getLogNameAttribute()
     {
-       return $this->firstname;
+       return $this->firstname . " " . $this->lastname;
     }
 	
 	
