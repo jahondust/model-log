@@ -39,7 +39,7 @@ just remove or add the field from model's  "$logFields" property
 	
 **Example:**
     
-	logFields = ['title'];
+	$logFields = ['title'];
 		
 	
 	
