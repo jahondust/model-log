@@ -8,8 +8,12 @@
         "logging"
     ],
     "require": {
+        "php": "^7.0",
+        "ext-json": "*",
+        "jenssegers/agent": "^2.6",
         "larapack/hooks": "~1.0",
-        "jenssegers/agent": "^2.6"
+        "laravel/framework": "^6.0",
+        "tcg/voyager": "^1.0"
     },
     "license": "MIT",
     "authors": [{
@@ -28,5 +32,11 @@
             ]
         }
     },
-    "minimum-stability": "dev"
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

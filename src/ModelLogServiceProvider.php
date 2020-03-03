@@ -4,6 +4,7 @@ namespace Jahondust\ModelLog;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Jahondust\ModelLog\Models\ModelLog;
@@ -24,12 +25,21 @@ Class ModelLogServiceProvider extends ServiceProvider
         'clear_model_log'
     ];
 
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
     protected $policies = [
         ModelLog::class => ModelLogPolicy::class
     ];
 
-    public function boot(){
-        try{
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot()
+    {
+        try {
             $this->registerPolicies();
 
             $this->loadViewsFrom(__DIR__.'/../resources/views', 'modellog');
@@ -37,11 +47,16 @@ Class ModelLogServiceProvider extends ServiceProvider
 
             $this->loadModels();
 
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
     public function register()
     {
         // Create Routes
@@ -57,25 +72,31 @@ Class ModelLogServiceProvider extends ServiceProvider
         //Load helpers
         $this->loadHelpers();
 
-        // Publish config
-        $this->publishes([dirname(__DIR__).'/config/model-log.php' => config_path('model-log.php')], 'model-log-config');
-
         // Create Table
         $this->addLogsTable();
     }
 
-    public function addRoutes($router){
+    /**
+     * Add routes.
+     *
+     * @param \Illuminate\Routing\Router $router
+     *
+     * @return void
+     */
+    public function addRoutes(Router $router)
+    {
         $namespacePrefix = '\\Jahondust\\ModelLog\\Controllers\\';
         $router->get('model_log', ['uses' => $namespacePrefix.'ModelLogController@browse', 'as' => 'model_log.index']);
         $router->delete('model_log_clear', ['uses' => $namespacePrefix.'ModelLogController@clear', 'as' => 'model_log.clear']);
         $router->get('modal_log_assets', ['uses' => $namespacePrefix.'ModelLogController@assets', 'as' => 'model_log.assets']);
-
     }
 
     /**
      * Adds the Model Logs icon to the admin menu.
      *
-     * @param TCG\Voyager\Models\Menu $menu
+     * @param \TCG\Voyager\Models\Menu $menu
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function addThemeMenuItem(Menu $menu)
     {
@@ -102,18 +123,22 @@ Class ModelLogServiceProvider extends ServiceProvider
     /**
      * Include models for Model Logs.
      *
-     * @return none
+     * @return void
      */
-    private function loadModels(){
-        foreach($this->models as $model){
+    private function loadModels()
+    {
+        foreach($this->models as $model) {
             $namespacePrefix = 'Jahondust\\ModelLog\\Models\\';
-            if(!class_exists($namespacePrefix . $model)){
+            if (!class_exists($namespacePrefix . $model)) {
                 @include(__DIR__.'/Models/' . $model . '.php');
             }
         }
     }
+
     /**
      * Load helpers.
+     *
+     * @return void
      */
     protected function loadHelpers()
     {
@@ -125,14 +150,16 @@ Class ModelLogServiceProvider extends ServiceProvider
     /**
      * Add Permissions for Model Logs if they do not exist yet.
      *
-     * @return none
+     * @return void
      */
     protected function ensurePermissionExist()
     {
         foreach ($this->permissions as $permissionName) {
+            /** @var \TCG\Voyager\Models\Permission $permission */
             $permission = Permission::firstOrNew(['key' => $permissionName, 'table_name' => 'model_log']);
             if (!$permission->exists) {
                 $permission->save();
+                /** @var \TCG\Voyager\Models\Role $role */
                 $role = Role::where('name', 'admin')->first();
                 if (!is_null($role)) {
                     $role->permissions()->attach($permission);
@@ -144,10 +171,11 @@ Class ModelLogServiceProvider extends ServiceProvider
     /**
      * Add the necessary Model Logs table if they do not exist.
      *
-     * @return none
+     * @return void
      */
-    private function addLogsTable(){
-        if(!Schema::hasTable('model_log')){
+    private function addLogsTable()
+    {
+        if(!Schema::hasTable('model_log')) {
             Schema::create('model_log', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('table_name');

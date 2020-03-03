@@ -3,13 +3,23 @@
 
 namespace Jahondust\ModelLog\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Agent\Agent;
 
 class ModelLog extends Model
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'model_log';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['table_name', 'row_id', 'event', 'user_id', 'before', 'after', 'ip_address', 'user_agent'];
 
     protected $events = [
@@ -29,9 +39,8 @@ class ModelLog extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('model-log.user_model', 'App\User'), 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
     }
-
 
     public function getUserAgent()
     {
@@ -51,10 +60,8 @@ class ModelLog extends Model
             case 'windows':
                 $user_agent['platform']['icon'] = 'fa fa-windows';
                 break;
-            case 'linux':
-                $user_agent['platform']['icon'] = 'fa fa-linux';
-                break;
             case 'ubuntu':
+            case 'linux':
                 $user_agent['platform']['icon'] = 'fa fa-linux';
                 break;
             case 'androidos':
@@ -64,7 +71,7 @@ class ModelLog extends Model
                 $user_agent['platform']['icon'] = 'fa fa-apple';
                 break;
             default:
-                $user_agent['platform']['icon'] = 'fa fa-superpowers'; 
+                $user_agent['platform']['icon'] = 'fa fa-superpowers';
                 break;
         }
         $user_agent['platform']['version'] = $platform . "  " . $p_version;

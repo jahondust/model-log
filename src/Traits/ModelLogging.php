@@ -9,18 +9,22 @@ use Jahondust\ModelLog\Models\ModelLog;
 
 trait ModelLogging
 {
-    public function getLogFields(){
+    public function getLogFields()
+    {
         return property_exists($this, 'logFields') ? $this->logFields : ['allFields'];
     }
 
-    public function getLogEvents(){
+    public function getLogEvents()
+    {
         return property_exists($this, 'logEvents') ? $this->logEvents : ['created', 'updated', 'deleted'];
     }
 
-    public function getUserId(){
+    public function getUserId()
+    {
         if(Auth::check()) {
             $user = Auth::user();
         }
+
         return isset($user->id) ? $user->id : 0;
     }
 
@@ -29,6 +33,7 @@ trait ModelLogging
         $request = Request();
         return $request->ip();
     }
+
     public function getUserAgent()
     {
         $request = Request();
@@ -37,8 +42,8 @@ trait ModelLogging
 
     public static function bootModelLogging()
     {
-        self::created(function($model){
-            if( in_array('created', $model->getLogEvents()) ){
+        self::created(function($model) {
+            if (in_array('created', $model->getLogEvents())) {
                 $log = ModelLog::create([
                     'user_id' => $model->getUserId(),
                     'table_name' => $model->getTable(),
@@ -50,8 +55,8 @@ trait ModelLogging
             }
         });
 
-        self::updating(function($model){
-            if( in_array('updated', $model->getLogEvents()) ) {
+        self::updating(function($model) {
+            if (in_array('updated', $model->getLogEvents())) {
                 $newdatas = $model->toArray();
                 $olddatas = $model->getOriginal();
                 $old = [];
@@ -80,8 +85,8 @@ trait ModelLogging
             }
         });
 
-        self::deleted(function($model){
-            if( in_array('deleted', $model->getLogEvents()) ) {
+        self::deleted(function($model) {
+            if (in_array('deleted', $model->getLogEvents())) {
                 $log = ModelLog::create([
                     'user_id' => $model->getUserId(),
                     'table_name' => $model->getTable(),

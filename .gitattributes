@@ -1,0 +1,206 @@
+################################ GITATTRIBUTES #################################
+#
+# These settings are based from https://github.com/alexkaratarakis/gitattributes
+#
+# Details per file setting:
+#   text    These files should be normalized (i.e. convert CRLF to LF).
+#   binary  These files are binary and should be left untouched.
+#
+# Note that binary is a macro for -text -diff.
+#
+################################################################################
+
+## AUTO-DETECT
+##   This will handle all files NOT defined below.
+*  eol=lf whitespace=trailing-space,blank-at-eof,space-before-tab,tab-in-indent
+
+## SOURCE CODE
+*.bat       eol=crlf
+*.coffee    eol=lf
+*.css       eol=lf diff=css linguist-vendored
+*.htm       eol=lf diff=html
+*.html      eol=lf diff=html
+*.inc       eol=lf
+*.ini       eol=lf
+*.js        eol=lf
+*.json      eol=lf
+*.jsx       eol=lf
+*.less      eol=lf
+*.od        eol=lf
+*.onlydata  eol=lf
+*.php       eol=lf diff=php
+*.pl        eol=lf
+*.py        eol=lf diff=python
+*.rb        eol=lf diff=ruby
+*.sass      eol=lf
+*.scm       eol=lf
+*.scss      eol=lf diff=css linguist-vendored
+*.sh        eol=lf
+*.sql       eol=lf
+*.styl      eol=lf
+*.tag       eol=lf
+*.ts        eol=lf
+*.tsx       eol=lf
+*.vue       eol=lf
+*.xml       eol=lf
+*.xhtml     eol=lf diff=html
+
+## DOCKER
+*.dockerignore  eol=lf
+Dockerfile      eol=lf
+
+## VAGRANT
+Vagrantfile  eol=lf diff=ruby
+
+## DOCUMENTATION
+*.ipynb       eol=lf export-ignore
+*.markdown    eol=lf export-ignore
+*.md          eol=lf export-ignore
+*.mdown       eol=lf export-ignore
+*.mdtext      eol=lf export-ignore
+*.mdtxt       eol=lf export-ignore
+*.mdwn        eol=lf export-ignore
+*.mkd         eol=lf export-ignore
+*.mkdn        eol=lf export-ignore
+*.mmd         eol=lf export-ignore
+*.txt         eol=lf export-ignore
+AUTHORS       eol=lf linguist-documentation export-ignore
+CHANGELOG     eol=lf export-ignore
+CHANGES       eol=lf export-ignore
+CONTRIBUTING  eol=lf export-ignore
+COPYING       eol=lf export-ignore
+copyright     eol=lf linguist-documentation export-ignore
+COPYRIGHT     eol=lf linguist-documentation export-ignore
+INSTALL       eol=lf export-ignore
+license       eol=lf export-ignore
+LICENSE       eol=lf export-ignore
+NEWS          eol=lf linguist-documentation export-ignore
+readme        eol=lf export-ignore
+TODO          eol=lf linguist-documentation export-ignore
+*COPYRIGHT*   eol=lf export-ignore
+*README*      eol=lf export-ignore
+/docs         export-ignore
+/tests        export-ignore
+
+## TEMPLATES
+*.dot         eol=lf
+*.ejs         eol=lf
+*.haml        eol=lf
+*.handlebars  eol=lf
+*.hbs         eol=lf
+*.hbt         eol=lf
+*.jade        eol=lf
+*.latte       eol=lf
+*.mustache    eol=lf
+*.njk         eol=lf
+*.phtml       eol=lf
+*.tmpl        eol=lf
+*.tpl         eol=lf
+*.twig        eol=lf
+
+## LINTERS
+.csslintrc     eol=lf
+.eslintrc      eol=lf
+.htmlhintrc    eol=lf
+.jscsrc        eol=lf
+.jshintignore  eol=lf
+.jshintrc      eol=lf
+.stylelintrc   eol=lf
+
+## CONFIGS
+*.bowerrc        eol=lf
+*.cnf            eol=lf
+*.conf           eol=lf
+*.config         eol=lf
+*.lock           eol=lf
+*.npmignore      eol=lf
+*.yaml           eol=lf
+*.yml            eol=lf
+.babelrc         eol=lf
+.browserslistrc  eol=lf
+.editorconfig    eol=lf export-ignore
+.env             eol=lf export-ignore
+.gitattributes   eol=lf export-ignore
+.gitconfig       eol=lf export-ignore
+.gitignore       eol=lf export-ignore
+.htaccess        eol=lf
+browserslist     eol=lf
+Makefile         eol=lf
+makefile         eol=lf
+
+## HEROKU
+.slugignore  eol=lf
+Procfile     eol=lf
+
+## GRAPHICS
+*.ai    binary
+*.bmp   binary
+*.eps   binary
+*.gif   binary
+*.ico   binary
+*.jng   binary
+*.jp2   binary
+*.jpg   binary
+*.jpeg  binary
+*.jpx   binary
+*.jxr   binary
+*.pdf   binary
+*.png   binary
+*.psb   binary
+*.psd   binary
+*.svg   eol=lf
+*.svgz  binary
+*.tif   binary
+*.tiff  binary
+*.wbmp  binary
+*.webp  binary
+
+## AUDIO
+*.kar   binary
+*.m4a   binary
+*.mid   binary
+*.midi  binary
+*.mp3   binary
+*.ogg   binary
+*.ra    binary
+
+## VIDEO
+*.3gpp  binary
+*.3gp   binary
+*.as    binary
+*.asf   binary
+*.asx   binary
+*.fla   binary
+*.flv   binary
+*.m4v   binary
+*.mng   binary
+*.mov   binary
+*.mp4   binary
+*.mpeg  binary
+*.mpg   binary
+*.ogv   binary
+*.swc   binary
+*.swf   binary
+*.webm  binary
+
+## ARCHIVES
+*.7z    binary
+*.bz2   binary
+*.bzip  binary
+*.gz    binary
+*.gzip  binary
+*.jar   binary
+*.rar   binary
+*.tar   binary
+*.zip   binary
+
+## FONTS
+*.ttf    binary
+*.eot    binary
+*.otf    binary
+*.woff   binary
+*.woff2  binary
+
+## EXECUTABLES
+*.exe  binary
+*.pyc  binary
