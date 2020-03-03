@@ -3,8 +3,8 @@
 
 namespace Jahondust\ModelLog\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 use Jenssegers\Agent\Agent;
 
 class ModelLog extends Model
@@ -29,7 +29,7 @@ class ModelLog extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('model-log.user_model', 'App\User'), 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
     }
 
 

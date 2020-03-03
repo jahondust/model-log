@@ -4,7 +4,7 @@
 namespace Jahondust\ModelLog\Policies;
 
 
-use App\User;
+use Illuminate\Foundation\Auth\User;
 use Jahondust\ModelLog\Models\ModelLog;
 
 class ModelLogPolicy

@@ -57,9 +57,6 @@ Class ModelLogServiceProvider extends ServiceProvider
         //Load helpers
         $this->loadHelpers();
 
-        // Publish config
-        $this->publishes([dirname(__DIR__).'/config/model-log.php' => config_path('model-log.php')], 'model-log-config');
-
         // Create Table
         $this->addLogsTable();
     }
