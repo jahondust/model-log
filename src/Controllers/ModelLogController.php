@@ -3,28 +3,34 @@
 namespace Jahondust\ModelLog\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Jahondust\ModelLog\Models\ModelLog;
 use Illuminate\Support\Facades\File;
-use TCG\Voyager\Facades\Voyager;
+use Jahondust\ModelLog\Models\ModelLog;
 use TCG\Voyager\Http\Controllers\Controller;
 
 class ModelLogController extends Controller
 {
-    public function browse(Request $request){
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function browse(Request $request)
+    {
         $this->authorize('browse', ModelLog::class);
 
         $search = (object) ['value' => $request->get('s'), 'key' => $request->get('key'), 'filter' => $request->get('filter')];
         $orderBy = $request->get('order_by', null);
         $sortOrder = $request->get('sort_order', null);
         $query = ModelLog::query();
-        if($search->filter == 'contains'){
+        if ($search->filter == 'contains') {
             $query->where($search->key, 'like', '%' . $search->value . '%');
-        } elseif($search->filter == 'equal') {
+        } elseif ($search->filter == 'equal') {
             $query->where($search->key, '=', $search->value);
         }
-        if(isset($orderBy)) {
+        if (isset($orderBy)) {
             $query->orderBy($orderBy, isset($sortOrder) ? $sortOrder : 'ASC');
         } else {
             $query->orderBy('id', 'DESC');
@@ -51,15 +57,27 @@ class ModelLogController extends Controller
         ));
     }
 
-    public function clear(Request $request){
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clear(Request $request)
+    {
         $this->authorize('clear', ModelLog::class);
 
         $query = ModelLog::query();
-        if (isset($request->table_name)){
+        if (isset($request->table_name)) {
             $query->where('table_name', $request->get('table_name'));
         }
-        if (isset($request->start_date)) $query->whereDate('created_at', '>=', $request->get('start_date'));
-        if (isset($request->end_date)) $query->whereDate('created_at', '<=', $request->get('end_date'));
+        if (isset($request->start_date)) {
+            $query->whereDate('created_at', '>=', $request->get('start_date'));
+        }
+        if (isset($request->end_date)) {
+            $query->whereDate('created_at', '<=', $request->get('end_date'));
+        }
 
         $query->delete();
         return redirect()
@@ -70,12 +88,18 @@ class ModelLogController extends Controller
             ]);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @throws \Exception
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function assets(Request $request)
     {
         $path = Str::start(str_replace(['../', './'], '', urldecode($request->path)), '/');
         $path = base_path('vendor/model-log/resources/assets'.$path);
         if (File::exists($path)) {
-            $mime = '';
             if (Str::endsWith($path, '.js')) {
                 $mime = 'text/javascript';
             } elseif (Str::endsWith($path, '.css')) {
