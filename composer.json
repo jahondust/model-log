@@ -2,14 +2,10 @@
     "name": "model-log",
     "description": "Voyager Model Log",
     "type": "library",
-    "tags": [
-        "laravel",
-        "voyager",
-        "logging"
-    ],
     "require": {
         "larapack/hooks": "~1.0",
-        "jenssegers/agent": "^2.6"
+        "jenssegers/agent": "^2.6",
+        "ext-json": "*"
     },
     "license": "MIT",
     "authors": [{
