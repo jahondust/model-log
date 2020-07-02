@@ -2,11 +2,11 @@
 
   Install hook
   
-    php artisan hook:install jahondust/model-log
+    php artisan hook:install model-log
 
   Enable hook
   
-    php artisan hook:enable jahondust/model-log
+    php artisan hook:enable model-log
 
   Publishing config
   

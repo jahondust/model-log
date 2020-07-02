@@ -1,5 +1,5 @@
 {
-    "name": "jahondust/model-log",
+    "name": "model-log",
     "description": "Voyager Model Log",
     "type": "library",
     "require": {
