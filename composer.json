@@ -1,8 +1,8 @@
 {
-    "name": "jahondust/model-log",
+    "name": "model-log",
     "description": "Voyager Model Log",
     "type": "library",
-    "tags": [
+    "keywords": [
         "laravel",
         "voyager",
         "logging"
@@ -27,6 +27,5 @@
                 "Jahondust\\ModelLog\\ModelLogServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "stable"
+    }
 }
