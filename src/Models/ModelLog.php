@@ -3,7 +3,7 @@
 
 namespace Jahondust\ModelLog\Models;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Agent\Agent;
 
@@ -29,7 +29,7 @@ class ModelLog extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('model-log.user_model', 'App\User'), 'user_id');
+        return $this->belongsTo(config('model-log.user_model', 'App\Models\User'), 'user_id');
     }
 
 
@@ -64,7 +64,7 @@ class ModelLog extends Model
                 $user_agent['platform']['icon'] = 'fa fa-apple';
                 break;
             default:
-                $user_agent['platform']['icon'] = 'fa fa-superpowers'; 
+                $user_agent['platform']['icon'] = 'fa fa-superpowers';
                 break;
         }
         $user_agent['platform']['version'] = $platform . "  " . $p_version;
