@@ -85,7 +85,7 @@
                                                 @if($field == 'table_name')
                                                     <h5 align="center">{{ $log->{$field} }}</h5>
                                                 @elseif($field == 'user_id')
-                                                    <i>{{ isset($log->user->log_name) ? $log->user->log_name : isset($log->user->name) ? $log->user->name : '' }}</i>
+                                                    <i>{{ (isset($log->user->log_name) ? $log->user->log_name : isset($log->user->name)) ? $log->user->name : '' }}</i>
                                                 @elseif($field == 'event')
                                                     <div class="primary"><span class="label {{ $log->getType()['class'] }}">{{ $log->getType()['title'] }}</span></div>
                                                 @elseif($field == 'before' || $field == 'after')
